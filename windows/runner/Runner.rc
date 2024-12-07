@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "flutter_resep" "\0"
+            VALUE "FileDescription", "Resep Masakan" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "flutter_resep" "\0"
+            VALUE "InternalName", "Resep Masakan" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "flutter_resep.exe" "\0"
-            VALUE "ProductName", "flutter_resep" "\0"
+            VALUE "OriginalFilename", "Resep Masakan.exe" "\0"
+            VALUE "ProductName", "Resep Masakan" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

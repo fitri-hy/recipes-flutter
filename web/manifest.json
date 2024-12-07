@@ -1,11 +1,11 @@
 {
-    "name": "flutter_resep",
-    "short_name": "flutter_resep",
+    "name": "Resep Masakan",
+    "short_name": "Resep Masakan",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Temukan dan mencoba berbagai resep masakan dari seluruh dunia.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

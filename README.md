@@ -2,7 +2,7 @@
 
 Aplikasi Flutter ini dirancang untuk memudahkan pengguna dalam menemukan dan mencoba berbagai resep masakan dari seluruh dunia. Dengan tampilan yang user-friendly dan fitur yang lengkap, aplikasi ini memungkinkan pengguna untuk mencari resep berdasarkan nama masakan yang mereka inginkan. Setiap resep dilengkapi dengan daftar bahan-bahan serta instruksi langkah demi langkah yang jelas dan mudah diikuti, sehingga pemula sekalipun dapat mencoba resep tersebut.
 
-## Versi Pengembangan
+## Version Pengembangan
 
 - Flutter 3.24.2
 - Tools • Dart 3.5.2 • DevTools 2.37.2
