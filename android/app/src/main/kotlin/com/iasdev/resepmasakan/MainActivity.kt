@@ -1,4 +1,4 @@
-package com.example.flutter_resep
+package com.iasdev.resepmasakan
 
 import io.flutter.embedding.android.FlutterActivity
 

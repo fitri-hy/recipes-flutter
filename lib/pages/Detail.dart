@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import '../plugin/ShimmerDetailLoading.dart';
 import '../services/Service.dart';
@@ -17,7 +19,18 @@ class _DetailPageState extends State<DetailPage> {
   Map<String, dynamic> recipe = {};
   String? recipeError;
   final RecipeService recipeService = RecipeService();
-
+	
+  Image getImageBanner(Map<String, dynamic> recipe) {
+    String imageUrl = recipe['imageUrl'];
+    if (imageUrl.startsWith('data:image')) {
+      List<int> bytes = base64Decode(imageUrl.split(',').last);
+      Uint8List uint8List = Uint8List.fromList(bytes);
+      return Image.memory(uint8List, fit: BoxFit.cover);
+    } else {
+      return Image.network(imageUrl, fit: BoxFit.cover);
+    }
+  }
+  
   @override
   void initState() {
     super.initState();
@@ -72,12 +85,10 @@ class _DetailPageState extends State<DetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.network(
-                        recipe['imageUrl'],
-                        width: double.infinity,
-                        height: 250,
-                        fit: BoxFit.cover,
-                      ),
+                      ClipRRect(
+						borderRadius: BorderRadius.circular(5),
+						child: getImageBanner(recipe),
+					  ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(

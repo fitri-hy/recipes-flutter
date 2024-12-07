@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import '../services/Service.dart';
 import '../plugin/ShimmerListLoading.dart';
@@ -18,6 +20,27 @@ class _SearchPageState extends State<SearchPage> {
   final RecipeService recipeService = RecipeService();
   ScrollController _scrollController = ScrollController();
   bool isLoading = false;
+  
+  Image getImageList(Map<String, dynamic> recipe) {
+	String imageUrl = recipe['imageUrl'];
+	if (imageUrl.startsWith('data:image')) {
+	  List<int> bytes = base64Decode(imageUrl.split(',').last);
+	  Uint8List uint8List = Uint8List.fromList(bytes);
+	  return Image.memory(
+		uint8List,
+		width: 100,
+		height: 100,
+		fit: BoxFit.cover,
+	  );
+	} else {
+	  return Image.network(
+		imageUrl,
+		width: 100,
+		height: 100,
+		fit: BoxFit.cover,
+	  );
+	}
+  }
 
   @override
   void initState() {
@@ -159,14 +182,9 @@ class _SearchPageState extends State<SearchPage> {
                                 child: Row(
                                   children: [
                                     ClipRRect(
-                                      borderRadius: BorderRadius.circular(5),
-                                      child: Image.network(
-                                        recipe['imageUrl'],
-                                        width: 100,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+									  borderRadius: BorderRadius.circular(5),
+									  child: getImageList(recipe),
+									),
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: Column(
