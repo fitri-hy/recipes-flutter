@@ -113,7 +113,7 @@ class _LandingPageState extends State<LandingPage> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.info),
             onPressed: () {
               Navigator.push(
                 context,

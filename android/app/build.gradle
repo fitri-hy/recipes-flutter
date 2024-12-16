@@ -32,12 +32,10 @@ android {
 	
 	signingConfigs {
         release {
-            if (project.hasProperty("storeFile")) {
-                storeFile file(project.storeFile)
-                storePassword project.storePassword
-                keyAlias project.keyAlias
-                keyPassword project.keyPassword
-            }
+            storeFile file('resep-masakan-key.keystore')
+            storePassword project.storePassword
+            keyAlias project.keyAlias
+            keyPassword project.keyPassword
         }
     }
 

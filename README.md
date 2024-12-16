@@ -14,6 +14,19 @@ Aplikasi Flutter ini dirancang untuk memudahkan pengguna dalam menemukan dan men
 - `flutter pub get`
 - `flutter run`
 
+## Generate Keystore
+
+```
+keytool -genkeypair -v -keystore resep-masakan-key.keystore -keyalg RSA -keysize 2048 -validity 10000 -storepass 220898 -keypass 220898 -alias resep-masakan
+```
+
+## Release
+
+```
+flutter build apk --release
+flutter build appbundle
+```
+
 <div style="display: flex; flex-wrap: wrap;">
   <img src="./assets/ss/1.png" alt="ss1" width="200"/>
   <img src="./assets/ss/2.png" alt="ss2" width="200"/>
