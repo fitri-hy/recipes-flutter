@@ -28,8 +28,8 @@ flutter build appbundle
 ```
 
 <div style="display: flex; flex-wrap: wrap;">
-  <img src="./assets/ss/1.png" alt="ss1" width="200"/>
-  <img src="./assets/ss/2.png" alt="ss2" width="200"/>
-  <img src="./assets/ss/3.png" alt="ss3" width="200"/>
-  <img src="./assets/ss/4.png" alt="ss4" width="200"/>
+  <img src="./assets/production/a1.png" alt="ss1" width="200"/>
+  <img src="./assets/production/a2.png" alt="ss2" width="200"/>
+  <img src="./assets/production/a3.png" alt="ss3" width="200"/>
+  <img src="./assets/production/a4.png" alt="ss4" width="200"/>
 </div>
