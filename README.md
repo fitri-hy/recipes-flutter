@@ -2,7 +2,7 @@
 
 Aplikasi Flutter ini dirancang untuk memudahkan pengguna dalam menemukan dan mencoba berbagai resep masakan dari seluruh dunia. Dengan tampilan yang user-friendly dan fitur yang lengkap, aplikasi ini memungkinkan pengguna untuk mencari resep berdasarkan nama masakan yang mereka inginkan. Setiap resep dilengkapi dengan daftar bahan-bahan serta instruksi langkah demi langkah yang jelas dan mudah diikuti, sehingga pemula sekalipun dapat mencoba resep tersebut.
 
-## Version Pengembangan
+## Alat Pengembangan
 
 - Flutter 3.24.2
 - Tools • Dart 3.5.2 • DevTools 2.37.2
@@ -14,13 +14,13 @@ Aplikasi Flutter ini dirancang untuk memudahkan pengguna dalam menemukan dan men
 - `flutter pub get`
 - `flutter run`
 
-## Generate Keystore
+## Menghasilkan Keystore
 
 ```
 keytool -genkeypair -v -keystore resep-masakan-key.keystore -keyalg RSA -keysize 2048 -validity 10000 -storepass 220898 -keypass 220898 -alias resep-masakan
 ```
 
-## Release
+## Peluncuran
 
 ```
 flutter build apk --release
