@@ -53,7 +53,7 @@ flutter build appbundle
 android:name="com.google.android.gms.ads.APPLICATION_ID"
 android:value="ca-app-pub-xxxxxxxxxxxxxxxxxx" />
 ```
-- AdMob bannerIdUnit: `lib/services/AdMobConfig.dart
+- AdMob bannerIdUnit: `lib/services/AdMobConfig.dart`
 
 ```
 class AdMobConfig {
