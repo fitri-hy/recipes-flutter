@@ -8,6 +8,10 @@ import 'Search.dart';
 import 'List.dart';
 import 'Detail.dart';
 import 'Settings.dart';
+import '../services/AdMobConfig.dart';
+
+// AdMob
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -18,6 +22,12 @@ class _LandingPageState extends State<LandingPage> {
   late Future<List<Map<String, dynamic>>> recipes;
   late Future<List<Map<String, dynamic>>> randomRecipes;
   late Future<List<Map<String, dynamic>>> randomRecipes2;
+  
+  // AdMob
+  late BannerAd _bannerAd;
+  late BannerAd _bannerAd2;
+  bool _isBannerAdLoaded = false;
+  bool _isBannerAdLoaded2 = false;
 
   @override
   void initState() {
@@ -25,6 +35,52 @@ class _LandingPageState extends State<LandingPage> {
     recipes = fetchRecipes();
     randomRecipes = fetchRandomRecipes();
     randomRecipes2 = fetchRandomRecipes();
+	
+	// AdMob
+    _initAdMob();
+    _initAdMob2();
+  }
+
+  // AdMob
+  void _initAdMob() {
+    _bannerAd = BannerAd(
+      adUnitId: AdMobConfig.bannerAdUnitId,
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          print('First Ad failed to load: $error');
+          ad.dispose();
+        },
+      ),
+      request: AdRequest(),
+    );
+    _bannerAd.load();
+  }
+
+  // AdMob
+  void _initAdMob2() {
+    _bannerAd2 = BannerAd(
+      adUnitId: AdMobConfig.bannerAdUnitId,
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isBannerAdLoaded2 = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          print('Second Ad failed to load: $error');
+          ad.dispose();
+        },
+      ),
+      request: AdRequest(),
+    );
+    _bannerAd2.load();
   }
 
   Future<List<Map<String, dynamic>>> fetchRecipes() async {
@@ -51,26 +107,26 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Image getImageList(Map<String, dynamic> recipe) {
-	String imageUrl = recipe['imageUrl'];
-	if (imageUrl.startsWith('data:image')) {
-	  List<int> bytes = base64Decode(imageUrl.split(',').last);
-	  Uint8List uint8List = Uint8List.fromList(bytes);
-	  return Image.memory(
-		uint8List,
-		width: 100,
-		height: 100,
-		fit: BoxFit.cover,
-	  );
-	} else {
-	  return Image.network(
-		imageUrl,
-		width: 100,
-		height: 100,
-		fit: BoxFit.cover,
-	  );
-	}
+    String imageUrl = recipe['imageUrl'];
+    if (imageUrl.startsWith('data:image')) {
+      List<int> bytes = base64Decode(imageUrl.split(',').last);
+      Uint8List uint8List = Uint8List.fromList(bytes);
+      return Image.memory(
+        uint8List,
+        width: 100,
+        height: 100,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Image.network(
+        imageUrl,
+        width: 100,
+        height: 100,
+        fit: BoxFit.cover,
+      );
+    }
   }
-	
+
   Image getImageBanner(Map<String, dynamic> recipe) {
     String imageUrl = recipe['imageUrl'];
     if (imageUrl.startsWith('data:image')) {
@@ -81,7 +137,7 @@ class _LandingPageState extends State<LandingPage> {
       return Image.network(imageUrl, fit: BoxFit.cover);
     }
   }
-	
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,6 +267,15 @@ class _LandingPageState extends State<LandingPage> {
                 }
               },
             ),
+			// AdMob
+			if (_isBannerAdLoaded)
+              Container(
+                alignment: Alignment.center,
+                child: AdWidget(ad: _bannerAd),
+                width: _bannerAd.size.width.toDouble(),
+                height: _bannerAd.size.height.toDouble(),
+				margin: EdgeInsets.only(top: 25),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 25, bottom: 10, left: 15),
               child: Row(
@@ -299,6 +364,15 @@ class _LandingPageState extends State<LandingPage> {
                   );
                 }
               },
+            ),
+			// AdMob
+			if (_isBannerAdLoaded2)
+              Container(
+                alignment: Alignment.center,
+                child: AdWidget(ad: _bannerAd2),
+                width: _bannerAd2.size.width.toDouble(),
+                height: _bannerAd2.size.height.toDouble(),
+				margin: EdgeInsets.only(top: 25),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 25, bottom: 10, left: 15),
@@ -389,38 +463,45 @@ class _LandingPageState extends State<LandingPage> {
                 }
               },
             ),
-			Container(
-			  margin: EdgeInsets.only(bottom: 20, top: 20),
-			  child: InkWell(
-				onTap: () {
-				  Navigator.push(
-					context,
-					MaterialPageRoute(builder: (context) => RecipeListPage()),
-				  );
-				},
-				child: Row(
-				  mainAxisAlignment: MainAxisAlignment.center,
-				  children: [
-					Text(
-					  'Resep Lainnya',
-					  style: TextStyle(
-						fontSize: 14,
-						fontWeight: FontWeight.bold,
-						color: Colors.blueAccent,
-					  ),
-					),
-					SizedBox(width: 5),
-					Icon(
-					  Icons.arrow_right,
-					  color: Colors.blueAccent,
-					),
-				  ],
-				),
-			  ),
-			)
+            Container(
+              margin: EdgeInsets.only(bottom: 20, top: 20),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RecipeListPage()),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Resep Lainnya',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent,
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Icon(
+                      Icons.arrow_right,
+                      color: Colors.blueAccent,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    _bannerAd2.dispose();
+    super.dispose();
   }
 }

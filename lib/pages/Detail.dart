@@ -5,6 +5,10 @@ import '../plugin/ShimmerDetailLoading.dart';
 import '../services/Service.dart';
 import 'Search.dart';
 import 'Landing.dart';
+import '../services/AdMobConfig.dart';
+
+// AdMob
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class DetailPage extends StatefulWidget {
   final String slug;
@@ -19,7 +23,15 @@ class _DetailPageState extends State<DetailPage> {
   Map<String, dynamic> recipe = {};
   String? recipeError;
   final RecipeService recipeService = RecipeService();
-	
+  
+  // AdMob
+  late InterstitialAd _interstitialAd;
+  late BannerAd _bannerAd1;
+  late BannerAd _bannerAd2;
+  bool _isInterstitialAdLoaded = false;
+  bool _isBannerAdLoaded1 = false;
+  bool _isBannerAdLoaded2 = false;
+
   Image getImageBanner(Map<String, dynamic> recipe) {
     String imageUrl = recipe['imageUrl'];
     if (imageUrl.startsWith('data:image')) {
@@ -35,6 +47,80 @@ class _DetailPageState extends State<DetailPage> {
   void initState() {
     super.initState();
     fetchRecipeDetail();
+    
+    // AdMob initialization
+    _initInterstitialAd();
+    _initBannerAd1();
+    _initBannerAd2();
+  }
+  
+  // AdMob: Interstitial Ad
+  void _initInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdMobConfig.initInterstitialAd,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          setState(() {
+            _interstitialAd = ad;
+            _isInterstitialAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (error) {
+          print('Interstitial Ad failed to load: $error');
+        },
+      ),
+    );
+  }
+  
+  // AdMob: Banner Ad 1
+  void _initBannerAd1() {
+    _bannerAd1 = BannerAd(
+      adUnitId: AdMobConfig.bannerAdUnitId,
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isBannerAdLoaded1 = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          print('Banner Ad 1 failed to load: $error');
+          ad.dispose();
+        },
+      ),
+      request: AdRequest(),
+    );
+    _bannerAd1.load();
+  }
+  
+  // AdMob: Banner Ad 2
+  void _initBannerAd2() {
+    _bannerAd2 = BannerAd(
+      adUnitId: AdMobConfig.bannerAdUnitId,
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isBannerAdLoaded2 = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          print('Banner Ad 2 failed to load: $error');
+          ad.dispose();
+        },
+      ),
+      request: AdRequest(),
+    );
+    _bannerAd2.load();
+  }
+  
+  @override
+  void dispose() {
+    _interstitialAd.dispose(); // AdMob: Interstitial Ad
+    _bannerAd1.dispose();       // AdMob: Banner Ad 1
+    _bannerAd2.dispose();       // AdMob: Banner Ad 2
+    super.dispose();
   }
 
   Future<void> fetchRecipeDetail() async {
@@ -43,6 +129,11 @@ class _DetailPageState extends State<DetailPage> {
       setState(() {
         recipe = data;
       });
+      
+      // Show interstitial ad if loaded
+      if (_isInterstitialAdLoaded) {
+        _interstitialAd.show();
+      }
     } catch (e) {
       setState(() {
         recipeError = e.toString();
@@ -57,14 +148,14 @@ class _DetailPageState extends State<DetailPage> {
       appBar: AppBar(
         title: Text(recipe['title'] ?? 'Memuat...'),
         actions: [
-		  IconButton(
+          IconButton(
             icon: Icon(Icons.home),
-			onPressed: () {
+            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => LandingPage()),
               );
-			},
+            },
           ),
           IconButton(
             icon: Icon(Icons.search),
@@ -86,9 +177,9 @@ class _DetailPageState extends State<DetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ClipRRect(
-						borderRadius: BorderRadius.circular(5),
-						child: getImageBanner(recipe),
-					  ),
+                        borderRadius: BorderRadius.circular(5),
+                        child: getImageBanner(recipe),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
@@ -137,6 +228,18 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                       ),
+					  
+					  //AdMob
+                      if (_isBannerAdLoaded1)
+					  Center(
+						child: Container(
+						  alignment: Alignment.center,
+						  child: AdWidget(ad: _bannerAd1),
+						  width: _bannerAd1.size.width.toDouble(),
+						  height: _bannerAd1.size.height.toDouble(),
+						  margin: EdgeInsets.only(top: 15),
+						),
+					  ),
                       Divider(),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -164,6 +267,18 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         );
                       }).toList(),
+					  
+					  //AdMob
+                      if (_isBannerAdLoaded2)
+					  Center(
+						child: Container(
+						  alignment: Alignment.center,
+						  child: AdWidget(ad: _bannerAd2),
+						  width: _bannerAd2.size.width.toDouble(),
+						  height: _bannerAd2.size.height.toDouble(),
+						  margin: EdgeInsets.only(top: 15),
+						),
+					  ),
                       Divider(),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
