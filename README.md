@@ -4,8 +4,8 @@ Flutter application is designed to make it easier for users to find and try vari
 
 ## Development Tools
 
-- Flutter 3.24.2
-- Tools • Dart 3.5.2 • DevTools 2.37.2
+- Flutter 3.27.1
+- Tools • Dart 3.6.0 • DevTools 2.40.2
 
 ## Run Program
 
