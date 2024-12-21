@@ -3,11 +3,37 @@ import 'package:shimmer/shimmer.dart';
 
 class ShimmerLoading extends StatelessWidget {
   final bool isGrid;
-  const ShimmerLoading({this.isGrid = false, Key? key}) : super(key: key);
+  final bool isCategory;
+  const ShimmerLoading({this.isGrid = false, this.isCategory = false, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (isGrid) {
+    if (isCategory) {
+      // Shimmer untuk kategori
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(6, (index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  width: 150.0,
+                  height: 120.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
+      );
+    } else if (isGrid) {
+      // Shimmer untuk grid
       return Center(
         child: Shimmer.fromColors(
           baseColor: Colors.grey[300]!,
@@ -35,6 +61,7 @@ class ShimmerLoading extends StatelessWidget {
         ),
       );
     } else {
+      // Shimmer untuk list
       return Shimmer.fromColors(
         baseColor: Colors.grey[300]!,
         highlightColor: Colors.grey[100]!,

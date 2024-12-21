@@ -11,12 +11,16 @@ import '../services/AdMobConfig.dart';
 // AdMob
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class RecipeListPage extends StatefulWidget {
+class RecipeCategoryPage extends StatefulWidget {
+  final String slug;
+  final String title;
+  RecipeCategoryPage({required this.slug, required this.title});
+  
   @override
-  _RecipeListPageState createState() => _RecipeListPageState();
+  _RecipeCategoryPageState createState() => _RecipeCategoryPageState();
 }
 
-class _RecipeListPageState extends State<RecipeListPage> {
+class _RecipeCategoryPageState extends State<RecipeCategoryPage> {
   List recipes = [];
   int currentPage = 1;
   int? nextPage;
@@ -78,7 +82,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
     });
 
     try {
-      final data = await recipeService.fetchRecipeList(currentPage);
+      final data = await recipeService.fetchCategoryDetail(widget.slug, currentPage);
       setState(() {
         recipes = data['recipes'];
         nextPage = data['pagination']['nextPage'];
@@ -128,14 +132,14 @@ class _RecipeListPageState extends State<RecipeListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+	  appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text('Daftar Resep'),
+        title: Text(widget.title),
         actions: [
           IconButton(
             icon: Icon(Icons.search),

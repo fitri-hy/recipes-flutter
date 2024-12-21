@@ -35,4 +35,24 @@ class RecipeService {
       throw Exception('Failed to search recipes');
     }
   }
+
+  Future<Map<String, dynamic>> fetchCategoryList(int page) async {
+    final response = await http.get(Uri.parse('$baseUrl/category'));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data;
+    } else {
+      throw Exception('Failed to load category');
+    }
+  }
+  
+  Future<Map<String, dynamic>> fetchCategoryDetail(String slug, int page) async {
+    final response = await http.get(Uri.parse('$baseUrl/category/$slug?page=$page'));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data;
+    } else {
+      throw Exception('Failed to load category detail');
+    }
+  }
 }

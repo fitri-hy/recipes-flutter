@@ -7,6 +7,7 @@ import '../plugin/ShimmerLoading.dart';
 import 'Search.dart';
 import 'List.dart';
 import 'Detail.dart';
+import 'Category.dart';
 import 'Settings.dart';
 import '../services/AdMobConfig.dart';
 
@@ -20,6 +21,7 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   late Future<List<Map<String, dynamic>>> recipes;
+  late Future<List<Map<String, dynamic>>> category;
   late Future<List<Map<String, dynamic>>> randomRecipes;
   late Future<List<Map<String, dynamic>>> randomRecipes2;
   
@@ -33,6 +35,7 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     recipes = fetchRecipes();
+    category = fetchCategories();
     randomRecipes = fetchRandomRecipes();
     randomRecipes2 = fetchRandomRecipes();
 	
@@ -93,6 +96,17 @@ class _LandingPageState extends State<LandingPage> {
       throw Exception('Failed to load recipes');
     }
   }
+  
+  Future<List<Map<String, dynamic>>> fetchCategories() async {
+    final recipeService = RecipeService();
+    try {
+      final data = await recipeService.fetchCategoryList(1);
+      final recipes = List<Map<String, dynamic>>.from(data['recipes']);
+      return recipes;
+    } catch (e) {
+      throw Exception('Failed to load recipes');
+    }
+  }
 
   Future<List<Map<String, dynamic>>> fetchRandomRecipes() async {
     final recipeService = RecipeService();
@@ -126,6 +140,34 @@ class _LandingPageState extends State<LandingPage> {
       );
     }
   }
+
+Widget getImageCategory(Map<String, dynamic> recipe) {
+  String imageUrl = recipe['imageUrl'];
+  if (imageUrl.startsWith('data:image')) {
+    List<int> bytes = base64Decode(imageUrl.split(',').last);
+    Uint8List uint8List = Uint8List.fromList(bytes);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50.0),
+      child: Image.memory(
+        uint8List,
+        width: 100,
+        height: 100,
+        fit: BoxFit.cover,
+      ),
+    );
+  } else {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50.0),
+      child: Image.network(
+        imageUrl,
+        width: 100,
+        height: 100,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+}
+
 
   Image getImageBanner(Map<String, dynamic> recipe) {
     String imageUrl = recipe['imageUrl'];
@@ -276,6 +318,86 @@ class _LandingPageState extends State<LandingPage> {
                 height: _bannerAd.size.height.toDouble(),
 				margin: EdgeInsets.only(top: 25),
             ),
+			Padding(
+              padding: const EdgeInsets.only(top: 25, bottom: 10, left: 15),
+              child: Row(
+                children: [
+                  Text(
+                    'Kategori',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+			FutureBuilder<List<Map<String, dynamic>>>(
+			  future: category,
+			  builder: (context, snapshot) {
+				if (snapshot.connectionState == ConnectionState.waiting) {
+				  return ShimmerLoading(isCategory: true);
+				} else if (snapshot.hasError) {
+				  return Text('Failed to load category');
+				} else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+				  return Text('No category available');
+				} else {
+				  final categories = snapshot.data!;
+				  return SingleChildScrollView(
+					scrollDirection: Axis.horizontal,
+					child: Row(
+					  children: categories.map((recipe) {
+						return GestureDetector(
+						  onTap: () {
+							String slug = recipe['slug'];
+							String title = recipe['title']; // Kirimkan juga judul
+							Navigator.push(
+							  context,
+							  MaterialPageRoute(
+								builder: (context) => RecipeCategoryPage(slug: slug, title: title),
+							  ),
+							);
+						  },
+						  child: Padding(
+							padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+							child: Card(
+							  elevation: 1.0,
+							  shape: RoundedRectangleBorder(
+								borderRadius: BorderRadius.circular(5.0),
+							  ),
+							  child: Container(
+								width: 150,
+								padding: const EdgeInsets.all(8.0),
+								child: Column(
+								  crossAxisAlignment: CrossAxisAlignment.start,
+								  children: [
+									ClipRRect(
+									  borderRadius: BorderRadius.circular(5.0),
+									  child: Center(
+										child: getImageCategory(recipe),
+									  ),
+									),
+									SizedBox(height: 8),
+									Center(
+									  child: Text(
+										recipe['title'] ?? 'No Title',
+										style: TextStyle(
+										  fontSize: 12,
+										  fontWeight: FontWeight.bold,
+										),
+										maxLines: 1,
+										overflow: TextOverflow.ellipsis,
+									  ),
+									),
+								  ],
+								),
+							  ),
+							),
+						  ),
+						);
+					  }).toList(),
+					),
+				  );
+				}
+			  },
+			),
             Padding(
               padding: const EdgeInsets.only(top: 25, bottom: 10, left: 15),
               child: Row(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/services.dart'; // Tambahkan import ini
+import 'package:flutter/services.dart';
 
 import 'Landing.dart';
 
@@ -68,10 +68,18 @@ class SettingsPage extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage('assets/developer.png'),
-                    ),
+                    Container(
+					  margin: EdgeInsets.all(0.0),
+					  child: ClipRRect(
+						borderRadius: BorderRadius.circular(5),
+						child: Image(
+						  image: NetworkImage('assets/developer.png'),
+						  width: 80,
+						  height: 80,
+						  fit: BoxFit.cover,
+						),
+					  ),
+					),
                     SizedBox(width: 16),
                     Expanded(
                       child: Column(

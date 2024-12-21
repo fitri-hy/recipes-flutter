@@ -130,7 +130,6 @@ class _DetailPageState extends State<DetailPage> {
         recipe = data;
       });
       
-      // Show interstitial ad if loaded
       if (_isInterstitialAdLoaded) {
         _interstitialAd.show();
       }
