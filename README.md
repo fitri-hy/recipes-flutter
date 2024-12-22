@@ -9,8 +9,8 @@ Flutter application is designed to make it easier for users to find and try vari
 
 ## Run Program
 
-- `git clone https://github.com/fitri-hy/resep-masakan-flutter.git`
-- `cd resep-masakan-flutter`
+- `git clone https://github.com/fitri-hy/recipes-flutter.git`
+- `cd recipes-flutter`
 - `flutter pub get`
 - `flutter run`
 
