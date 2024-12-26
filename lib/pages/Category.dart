@@ -132,7 +132,9 @@ class _RecipeCategoryPageState extends State<RecipeCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+	  backgroundColor: Color(0xffffffff),
 	  appBar: AppBar(
+		backgroundColor: Color(0xffffffff),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -189,11 +191,16 @@ class _RecipeCategoryPageState extends State<RecipeCategoryPage> {
                             },
                             child: Card(
                               elevation: 0.3,
+							  color: Color(0xffffffff),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
+								borderRadius: BorderRadius.circular(5),
+								side: BorderSide(
+								  color: Color(0xFFf0f0f0),
+								  width: 1.0,
+								),
+							  ),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                                 child: Row(
                                   children: [
                                     ClipRRect(

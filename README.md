@@ -43,6 +43,10 @@ flutter build appbundle
 
 ## Changelog
 
+> ### V1.0.0(4)
+
+- [ADD] Splash Screen
+
 > ### V1.0.0(3)
 
 - [ADD] Recipes Category

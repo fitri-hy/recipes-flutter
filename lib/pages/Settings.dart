@@ -8,8 +8,10 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffffffff),
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Color(0xffffffff),
         title: Row(
           children: [
             Image.asset(
@@ -38,107 +40,9 @@ class SettingsPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(0.0),
+        padding: const EdgeInsets.all(16.0),
         child: ListView(
-          padding: EdgeInsets.all(16.0),
           children: [
-            Text(
-              'Pengembang',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueGrey[800],
-                    fontSize: 20,
-                  ),
-            ),
-            SizedBox(height: 8),
-            Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.blueAccent, Colors.blue],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-					  margin: EdgeInsets.all(0.0),
-					  child: ClipRRect(
-						borderRadius: BorderRadius.circular(5),
-						child: Image(
-						  image: NetworkImage('assets/developer.png'),
-						  width: 80,
-						  height: 80,
-						  fit: BoxFit.cover,
-						),
-					  ),
-					),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Fitri HY',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            'Fullstack Developer',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.apartment,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                'I-As.Dev',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/wa.png',
-                        width: 25,
-                        height: 25,
-                      ),
-                      onPressed: () {
-                        final phoneNumber = '6281525977595';
-                        final whatsappUrl = 'https://wa.me/$phoneNumber';
-                        launch(whatsappUrl);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 24),
             Text(
               'Tentang Aplikasi',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -155,9 +59,6 @@ class SettingsPage extends StatelessWidget {
                 color: Colors.blueGrey[800],
               ),
             ),
-            SizedBox(height: 12),
-            _buildReference('Situs', 'https://i-as.dev'),
-            _buildReference('Dukungan & Kontak', 'mailto:noreply.orzpartners@gmail.com'),
             SizedBox(height: 24),
             ButtonBar(
               alignment: MainAxisAlignment.center,
@@ -180,6 +81,115 @@ class SettingsPage extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: 24),
+            Text(
+              'Pengembang',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey[800],
+                    fontSize: 20,
+                  ),
+            ),
+            SizedBox(height: 8),
+            Card(
+			  elevation: 3,
+			  shape: RoundedRectangleBorder(
+				borderRadius: BorderRadius.circular(5),
+			  ),
+			  child: Container(
+				padding: const EdgeInsets.all(16.0),
+				decoration: BoxDecoration(
+				  gradient: LinearGradient(
+					colors: [Colors.blueAccent, Colors.blue],
+					begin: Alignment.topLeft,
+					end: Alignment.bottomRight,
+				  ),
+				  borderRadius: BorderRadius.circular(5),
+				),
+				child: Column(
+				  crossAxisAlignment: CrossAxisAlignment.start,
+				  children: [
+					Row(
+					  children: [
+						ClipRRect(
+						  borderRadius: BorderRadius.circular(50),
+						  child: Image.asset(
+							'assets/developer.png',
+							width: 60,
+							height: 60,
+							fit: BoxFit.cover,
+						  ),
+						),
+						SizedBox(width: 16),
+						Expanded(
+						  child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: [
+							  Text(
+								'Fitri HY',
+								style: TextStyle(
+								  fontWeight: FontWeight.bold,
+								  fontSize: 20,
+								  color: Colors.white,
+								),
+							  ),
+							  SizedBox(height: 5),
+							  Text(
+								'Fullstack Developer',
+								style: TextStyle(
+								  fontSize: 14,
+								  color: Colors.white,
+								),
+							  ),
+							  Row(
+								children: [
+								  Icon(
+									Icons.apartment,
+									color: Colors.white,
+									size: 18,
+								  ),
+								  SizedBox(width: 4),
+								  Text(
+									'I-As.Dev',
+									style: TextStyle(
+									  fontSize: 14,
+									  color: Colors.white,
+									),
+								  ),
+								],
+							  ),
+							],
+						  ),
+						),
+						IconButton(
+						  icon: Image.asset(
+							'assets/wa.png',
+							width: 25,
+							height: 25,
+						  ),
+						  onPressed: () {
+							final phoneNumber = '6281525977595';
+							final whatsappUrl = 'https://wa.me/$phoneNumber';
+							launchURL(whatsappUrl);
+						  },
+						),
+					  ],
+					),
+					SizedBox(height: 20),
+					Text(
+					  'Hai, aku Fitri Herma Yanti (Fitri HY). Aku sangat antusias dalam pengembangan aplikasi dan web. Jika kamu memiliki proyek atau ide yang ingin dikembangkan, jangan ragu untuk berdiskusi denganku. Aku dan Tim siap membantu dan berbagi pengalaman dalam membangun solusi yang efektif dan berkualitas!',
+					  style: TextStyle(
+						fontSize: 14,
+						color: Colors.white,
+					  ),
+					),
+					SizedBox(height: 15),
+					_buildReference('Situs', 'https://i-as.dev'),
+					_buildReference('Dukungan & Kontak', 'mailto:noreply.orzpartners@gmail.com'),
+				  ],
+				),
+			  ),
+			),
           ],
         ),
       ),
@@ -221,15 +231,14 @@ class SettingsPage extends StatelessWidget {
 
   Widget _buildReference(String title, String url) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
       child: Row(
         children: [
           Icon(
             Icons.link,
-            color: Colors.blueAccent,
+            color: Colors.white,
             size: 22,
           ),
-          SizedBox(width: 8),
           Expanded(
             child: GestureDetector(
               onTap: () {
@@ -239,8 +248,7 @@ class SettingsPage extends StatelessWidget {
                 title,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.blueGrey[800],
-                  decoration: TextDecoration.underline,
+                  color: Colors.white,
                 ),
               ),
             ),

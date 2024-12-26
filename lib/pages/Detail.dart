@@ -144,7 +144,9 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+	  backgroundColor: Color(0xffffffff),
       appBar: AppBar(
+		backgroundColor: Color(0xffffffff),
         title: Text(recipe['title'] ?? 'Memuat...'),
         actions: [
           IconButton(
@@ -176,7 +178,7 @@ class _DetailPageState extends State<DetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(0),
                         child: getImageBanner(recipe),
                       ),
                       Padding(

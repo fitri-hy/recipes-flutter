@@ -117,8 +117,10 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+	  backgroundColor: Color(0xffffffff),
       appBar: AppBar(
         automaticallyImplyLeading: false,
+		backgroundColor: Color(0xffffffff),
         title: Row(
           children: [
             Image.asset('assets/logo.png', height: 30),
@@ -187,9 +189,16 @@ class _SearchPageState extends State<SearchPage> {
                             },
                             child: Card(
                               elevation: 0.3,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+							  color: Color(0xffffffff),
+                              shape: RoundedRectangleBorder(
+								borderRadius: BorderRadius.circular(5),
+								side: BorderSide(
+								  color: Color(0xFFf0f0f0),
+								  width: 1.0,
+								),
+							  ),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                                 child: Row(
                                   children: [
                                     ClipRRect(borderRadius: BorderRadius.circular(5), child: getImageList(recipe)),

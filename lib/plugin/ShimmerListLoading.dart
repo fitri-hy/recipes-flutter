@@ -17,6 +17,7 @@ class ShimmerListLoading extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0),
           child: Card(
             elevation: 0,
+			color: Color(0xffffffff),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),

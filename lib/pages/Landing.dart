@@ -183,8 +183,10 @@ Widget getImageCategory(Map<String, dynamic> recipe) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+	  backgroundColor: Color(0xffffffff),
       appBar: AppBar(
         automaticallyImplyLeading: false,
+		backgroundColor: Color(0xffffffff),
         title: Row(
           children: [
             Image.asset(
@@ -342,12 +344,14 @@ Widget getImageCategory(Map<String, dynamic> recipe) {
 				  final categories = snapshot.data!;
 				  return SingleChildScrollView(
 					scrollDirection: Axis.horizontal,
-					child: Row(
+					child: Padding(
+					  padding: EdgeInsets.symmetric(horizontal: 20.0),
+					  child: Row(
 					  children: categories.map((recipe) {
 						return GestureDetector(
 						  onTap: () {
 							String slug = recipe['slug'];
-							String title = recipe['title']; // Kirimkan juga judul
+							String title = recipe['title'];
 							Navigator.push(
 							  context,
 							  MaterialPageRoute(
@@ -359,8 +363,13 @@ Widget getImageCategory(Map<String, dynamic> recipe) {
 							padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
 							child: Card(
 							  elevation: 1.0,
+							  color: Color(0xffffffff),
 							  shape: RoundedRectangleBorder(
-								borderRadius: BorderRadius.circular(5.0),
+								borderRadius: BorderRadius.circular(5),
+								side: BorderSide(
+								  color: Color(0xFFf0f0f0),
+								  width: 1.0,
+								),
 							  ),
 							  child: Container(
 								width: 150,
@@ -393,6 +402,7 @@ Widget getImageCategory(Map<String, dynamic> recipe) {
 						  ),
 						);
 					  }).toList(),
+					  ),
 					),
 				  );
 				}
@@ -440,9 +450,14 @@ Widget getImageCategory(Map<String, dynamic> recipe) {
                           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
                           child: Card(
                             elevation: 0.3,
+							color: Color(0xffffffff),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
+								borderRadius: BorderRadius.circular(5),
+								side: BorderSide(
+								  color: Color(0xFFf0f0f0),
+								  width: 1.0,
+								),
+							  ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -538,9 +553,14 @@ Widget getImageCategory(Map<String, dynamic> recipe) {
                           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
                           child: Card(
                             elevation: 0.3,
+							color: Color(0xffffffff),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
+								borderRadius: BorderRadius.circular(5),
+								side: BorderSide(
+								  color: Color(0xFFf0f0f0),
+								  width: 1.0,
+								),
+							  ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
